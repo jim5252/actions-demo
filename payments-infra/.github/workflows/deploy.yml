@@ -1,0 +1,19 @@
+# The Payments team's entire pipeline. The platform team owns the rest.
+name: deploy
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+  id-token: write
+  pull-requests: write
+
+jobs:
+  terraform:
+    uses: GITHUB_OWNER/platform-workflows/.github/workflows/terraform.yml@v1
+    with:
+      plan-role-arn: arn:aws:iam::AWS_ACCOUNT_ID:role/gha-payments-infra-plan
+      apply-role-arn: arn:aws:iam::AWS_ACCOUNT_ID:role/gha-payments-infra-apply
